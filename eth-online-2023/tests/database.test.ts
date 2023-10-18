@@ -6,7 +6,7 @@ import {
   beforeAll,
   afterAll
 } from "matchstick-as/assembly/index"
-import { Address, BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, Address } from "@graphprotocol/graph-ts"
 import { EtherTransferred } from "../generated/schema"
 import { EtherTransferred as EtherTransferredEvent } from "../generated/Database/Database"
 import { handleEtherTransferred } from "../src/database"
@@ -17,11 +17,13 @@ import { createEtherTransferredEvent } from "./database-utils"
 
 describe("Describe entity assertions", () => {
   beforeAll(() => {
+    let auditId = BigInt.fromI32(234)
     let recipient = Address.fromString(
       "0x0000000000000000000000000000000000000001"
     )
     let amount = BigInt.fromI32(234)
     let newEtherTransferredEvent = createEtherTransferredEvent(
+      auditId,
       recipient,
       amount
     )
@@ -39,6 +41,12 @@ describe("Describe entity assertions", () => {
     assert.entityCount("EtherTransferred", 1)
 
     // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
+    assert.fieldEquals(
+      "EtherTransferred",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "auditId",
+      "234"
+    )
     assert.fieldEquals(
       "EtherTransferred",
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",

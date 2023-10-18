@@ -60,6 +60,20 @@ contract Database {
     }
 
     // Function for inserting new entry into the audit table.
+    event insertIntoAuditEvent(
+        uint256 auditId,
+        address ownerId,
+        uint256 createdAt,
+        string contractCid,
+        string description,
+        bool isComplete,
+        uint256 yesBugs,
+        uint256 noBugs,
+        uint256 yesBugsPoolEth,
+        uint256 noBugsPoolEth,
+        bool bugExistsDecision
+    );
+
     function insertIntoAudit(
         address ownerId,
         string memory contractCid,
@@ -80,10 +94,32 @@ contract Database {
         );
         auditsArray.push(entry);
         ownerToAuditId[ownerId].push(currentAuditId);
+        emit insertIntoAuditEvent(
+            currentAuditId,
+            ownerId,
+            entry.createdAt,
+            contractCid,
+            description,
+            false,
+            0,
+            0,
+            0,
+            0,
+            false
+        );
         currentAuditId += 1;
     }
 
     // Function to add new entry into the issues table.
+    event insertIntoIssueEvent(
+        uint256 issueId,
+        uint256 auditId,
+        address reportedBy,
+        bool isAccepted,
+        bool isPending,
+        string description
+    );
+
     function insertIntoIssue(
         uint256 auditId,
         address reportedBy,
@@ -105,30 +141,60 @@ contract Database {
         issuesArray.push(entry);
         ownerToIssueId[reportedBy].push(currentIssueId);
         auditIdToIssueId[auditId].push(currentIssueId);
+        emit insertIntoIssueEvent(
+            currentIssueId,
+            auditId,
+            reportedBy,
+            false,
+            true,
+            description
+        );
         currentIssueId += 1;
     }
 
     // Function for setting the audit state as completed.
+    event setAuditCompletedEvent(
+        uint256 auditId,
+        bool bugExistsDecision,
+        audit auditState
+    );
+
     function setAuditCompleted(
         bool bugExistsDecision,
         uint256 auditId
     ) public auditIdShouldExist(auditId) returns (bool) {
         require(
             auditsArray[auditId].isComplete == false,
-            "Audit period is already completed."
+            "Audit is already completed."
         );
         auditsArray[auditId].isComplete = true;
         auditsArray[auditId].bugExistsDecision = bugExistsDecision;
+        emit setAuditCompletedEvent(
+            auditId,
+            bugExistsDecision,
+            auditsArray[auditId]
+        );
         return auditsArray[auditId].isComplete;
     }
 
     // Function for setting the issue state as accepted or not.
+    event setIsIssueAcceptedEvent(
+        uint256 issueId,
+        bool isIssueAccepted,
+        issue issueState
+    );
+
     function setIssueAccepted(
         bool isIssueAccepted,
         uint256 issueId
     ) public issueIdShouldExist(issueId) returns (bool) {
         issuesArray[issueId].isAccepted = isIssueAccepted;
         issuesArray[issueId].isPending = false;
+        emit setIsIssueAcceptedEvent(
+            issueId,
+            isIssueAccepted,
+            issuesArray[issueId]
+        );
         return issuesArray[issueId].isAccepted;
     }
 
@@ -163,6 +229,12 @@ contract Database {
     }
 
     // Betting Functions
+    event betYesBugsPoolEvent(
+        uint256 auditId,
+        address contributor,
+        uint256 contribution,
+        audit auditState
+    );
 
     function betYesBugsPool(
         uint256 auditId
@@ -171,16 +243,25 @@ contract Database {
             msg.value >= 1000000000,
             "Bet value must be greater than or equal to 1000000000 Wei"
         );
-        require(
-            hasVoted(auditId, msg.sender) == false,
-            "The User has already voted in the pool."
-        );
         auditsArray[auditId].yesBugs += 1;
         auditsArray[auditId].yesBugsPoolEth += msg.value;
         votes[auditId][msg.sender] = 1;
         contribution memory con = contribution(payable(msg.sender), msg.value);
         yesBugsVoters[auditId].push(con);
+        emit betYesBugsPoolEvent(
+            auditId,
+            msg.sender,
+            msg.value,
+            auditsArray[auditId]
+        );
     }
+
+    event betNoBugsPoolEvent(
+        uint256 auditId,
+        address contributor,
+        uint256 contribution,
+        audit auditState
+    );
 
     function betNoBugsPool(
         uint256 auditId
@@ -189,15 +270,17 @@ contract Database {
             msg.value >= 1000000000,
             "Bet value must be greater than or equal to 1000000000 Wei"
         );
-        require(
-            hasVoted(auditId, msg.sender) == false,
-            "The User has already voted in the pool."
-        );
         auditsArray[auditId].noBugs += 1;
         auditsArray[auditId].noBugsPoolEth += msg.value;
         votes[auditId][msg.sender] = -1;
         contribution memory con = contribution(payable(msg.sender), msg.value);
         noBugsVoters[auditId].push(con);
+        emit betNoBugsPoolEvent(
+            auditId,
+            msg.sender,
+            msg.value,
+            auditsArray[auditId]
+        );
     }
 
     function getListOfYesBugsVoters(
@@ -223,7 +306,11 @@ contract Database {
         return address(this).balance;
     }
 
-    event EtherTransferred(address indexed recipient, uint256 amount);
+    event EtherTransferred(
+        uint256 auditId,
+        address indexed recipient,
+        uint256 amount
+    );
 
     function distribution(uint256 auditId) public payable {
         require(
@@ -239,6 +326,7 @@ contract Database {
                     100;
                 yesBugsVoters[auditId][i].contributor.transfer(amount);
                 emit EtherTransferred(
+                    auditId,
                     yesBugsVoters[auditId][i].contributor,
                     amount
                 );
@@ -250,6 +338,7 @@ contract Database {
                     100;
                 noBugsVoters[auditId][i].contributor.transfer(amount);
                 emit EtherTransferred(
+                    auditId,
                     noBugsVoters[auditId][i].contributor,
                     amount
                 );

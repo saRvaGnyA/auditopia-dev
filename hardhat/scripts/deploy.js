@@ -2,7 +2,7 @@ const { ethers } = require("hardhat");
 require("dotenv").config({ path: ".env" });
 
 async function main() {
-  const contract = await ethers.getContractFactory("TableLand");
+  const contract = await ethers.getContractFactory("Database");
   const deployedContract = await contract.deploy();
   await deployedContract.deployed();
   console.log("Contract deployed at address : ", deployedContract.address);

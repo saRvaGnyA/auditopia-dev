@@ -9,26 +9,14 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "auditId", "type": "uint256" }
-    ],
-    "name": "betYesBugsPool",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "auditId", "type": "uint256" }
-    ],
-    "name": "distribution",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
     "anonymous": false,
     "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
       {
         "indexed": true,
         "internalType": "address",
@@ -46,6 +34,136 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "contributor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "contribution",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "auditId", "type": "uint256" },
+          { "internalType": "address", "name": "ownerId", "type": "address" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "string", "name": "contractCid", "type": "string" },
+          { "internalType": "string", "name": "description", "type": "string" },
+          { "internalType": "bool", "name": "isComplete", "type": "bool" },
+          { "internalType": "uint256", "name": "yesBugs", "type": "uint256" },
+          { "internalType": "uint256", "name": "noBugs", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "yesBugsPoolEth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "noBugsPoolEth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "bugExistsDecision",
+            "type": "bool"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Database.audit",
+        "name": "auditState",
+        "type": "tuple"
+      }
+    ],
+    "name": "betNoBugsPoolEvent",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "auditId", "type": "uint256" }
+    ],
+    "name": "betYesBugsPool",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "contributor",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "contribution",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "auditId", "type": "uint256" },
+          { "internalType": "address", "name": "ownerId", "type": "address" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "string", "name": "contractCid", "type": "string" },
+          { "internalType": "string", "name": "description", "type": "string" },
+          { "internalType": "bool", "name": "isComplete", "type": "bool" },
+          { "internalType": "uint256", "name": "yesBugs", "type": "uint256" },
+          { "internalType": "uint256", "name": "noBugs", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "yesBugsPoolEth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "noBugsPoolEth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "bugExistsDecision",
+            "type": "bool"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Database.audit",
+        "name": "auditState",
+        "type": "tuple"
+      }
+    ],
+    "name": "betYesBugsPoolEvent",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "auditId", "type": "uint256" }
+    ],
+    "name": "distribution",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "address", "name": "ownerId", "type": "address" },
       { "internalType": "string", "name": "contractCid", "type": "string" },
@@ -55,6 +173,79 @@
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "ownerId",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "createdAt",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "contractCid",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isComplete",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "yesBugs",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "noBugs",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "yesBugsPoolEth",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "noBugsPoolEth",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "bugExistsDecision",
+        "type": "bool"
+      }
+    ],
+    "name": "insertIntoAuditEvent",
+    "type": "event"
   },
   {
     "inputs": [
@@ -68,8 +259,50 @@
     "type": "function"
   },
   {
+    "anonymous": false,
     "inputs": [
-      { "internalType": "bool", "name": "isAuditCompleted", "type": "bool" },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "issueId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "reportedBy",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isAccepted",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isPending",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "insertIntoIssueEvent",
+    "type": "event"
+  },
+  {
+    "inputs": [
       { "internalType": "bool", "name": "bugExistsDecision", "type": "bool" },
       { "internalType": "uint256", "name": "auditId", "type": "uint256" }
     ],
@@ -77,6 +310,93 @@
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "bugExistsDecision",
+        "type": "bool"
+      },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "auditId", "type": "uint256" },
+          { "internalType": "address", "name": "ownerId", "type": "address" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" },
+          { "internalType": "string", "name": "contractCid", "type": "string" },
+          { "internalType": "string", "name": "description", "type": "string" },
+          { "internalType": "bool", "name": "isComplete", "type": "bool" },
+          { "internalType": "uint256", "name": "yesBugs", "type": "uint256" },
+          { "internalType": "uint256", "name": "noBugs", "type": "uint256" },
+          {
+            "internalType": "uint256",
+            "name": "yesBugsPoolEth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "noBugsPoolEth",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "bugExistsDecision",
+            "type": "bool"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Database.audit",
+        "name": "auditState",
+        "type": "tuple"
+      }
+    ],
+    "name": "setAuditCompletedEvent",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "issueId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "isIssueAccepted",
+        "type": "bool"
+      },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "issueId", "type": "uint256" },
+          { "internalType": "uint256", "name": "auditId", "type": "uint256" },
+          {
+            "internalType": "address",
+            "name": "reportedBy",
+            "type": "address"
+          },
+          { "internalType": "bool", "name": "isAccepted", "type": "bool" },
+          { "internalType": "bool", "name": "isPending", "type": "bool" },
+          { "internalType": "string", "name": "description", "type": "string" }
+        ],
+        "indexed": false,
+        "internalType": "struct Database.issue",
+        "name": "issueState",
+        "type": "tuple"
+      }
+    ],
+    "name": "setIsIssueAcceptedEvent",
+    "type": "event"
   },
   {
     "inputs": [

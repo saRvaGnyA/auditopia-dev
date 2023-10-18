@@ -6,7 +6,7 @@ dataSources:
     name: Database
     network: sepolia
     source:
-      address: "0x6C7A4D68ffe57c3364cf71e3B34020f003480208"
+      address: "0xcf27c0524dA9E983b613E1Ee7C6B8A08DFca4485"
       abi: Database
       startBlock: 0
     mapping:
@@ -15,10 +15,28 @@ dataSources:
       language: wasm/assemblyscript
       entities:
         - EtherTransferred
+        - betNoBugsPoolEvent
+        - betYesBugsPoolEvent
+        - insertIntoAuditEvent
+        - insertIntoIssueEvent
+        - setAuditCompletedEvent
+        - setIsIssueAcceptedEvent
       abis:
         - name: Database
           file: ./abis/Database.json
       eventHandlers:
-        - event: EtherTransferred(indexed address,uint256)
+        - event: EtherTransferred(uint256,indexed address,uint256)
           handler: handleEtherTransferred
+        - event: betNoBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool))
+          handler: handlebetNoBugsPoolEvent
+        - event: betYesBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool))
+          handler: handlebetYesBugsPoolEvent
+        - event: insertIntoAuditEvent(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool)
+          handler: handleinsertIntoAuditEvent
+        - event: insertIntoIssueEvent(uint256,uint256,address,bool,bool,string)
+          handler: handleinsertIntoIssueEvent
+        - event: setAuditCompletedEvent(uint256,bool,(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool))
+          handler: handlesetAuditCompletedEvent
+        - event: setIsIssueAcceptedEvent(uint256,bool,(uint256,uint256,address,bool,bool,string))
+          handler: handlesetIsIssueAcceptedEvent
       file: ./src/database.ts
