@@ -14,6 +14,7 @@ contract Database {
         uint256 noBugs;
         uint256 yesBugsPoolEth;
         uint256 noBugsPoolEth;
+        bool bugExistsDecision;
     }
     struct issue {
         uint256 issueId;
@@ -24,12 +25,13 @@ contract Database {
         string description;
     }
     struct contribution {
-        address contributor;
+        address payable contributor;
         uint256 etherContributed;
     }
 
     mapping(address => uint256[]) ownerToAuditId;
     mapping(address => uint256[]) ownerToIssueId;
+    mapping(uint256 => uint256[]) auditIdToIssueId;
     mapping(uint256 => mapping(address => int256)) votes;
     mapping(uint256 => contribution[]) yesBugsVoters;
     mapping(uint256 => contribution[]) noBugsVoters;
@@ -73,7 +75,8 @@ contract Database {
             0,
             0,
             0,
-            0
+            0,
+            false
         );
         auditsArray.push(entry);
         ownerToAuditId[ownerId].push(currentAuditId);
@@ -101,15 +104,21 @@ contract Database {
         );
         issuesArray.push(entry);
         ownerToIssueId[reportedBy].push(currentIssueId);
+        auditIdToIssueId[auditId].push(currentIssueId);
         currentIssueId += 1;
     }
 
     // Function for setting the audit state as completed.
     function setAuditCompleted(
-        bool isAuditCompleted,
+        bool bugExistsDecision,
         uint256 auditId
     ) public auditIdShouldExist(auditId) returns (bool) {
-        auditsArray[auditId].isComplete = isAuditCompleted;
+        require(
+            auditsArray[auditId].isComplete == false,
+            "Audit period is already completed."
+        );
+        auditsArray[auditId].isComplete = true;
+        auditsArray[auditId].bugExistsDecision = bugExistsDecision;
         return auditsArray[auditId].isComplete;
     }
 
@@ -135,6 +144,12 @@ contract Database {
         return ownerToIssueId[ownerAddress];
     }
 
+    function getIssueIdsForAudits(
+        uint256 auditId
+    ) public view returns (uint256[] memory) {
+        return auditIdToIssueId[auditId];
+    }
+
     function getAudit(
         uint256 auditId
     ) public view auditIdShouldExist(auditId) returns (audit memory) {
@@ -152,20 +167,36 @@ contract Database {
     function betYesBugsPool(
         uint256 auditId
     ) public payable auditIdShouldExist(auditId) {
+        require(
+            msg.value >= 1000000000,
+            "Bet value must be greater than or equal to 1000000000 Wei"
+        );
+        require(
+            hasVoted(auditId, msg.sender) == false,
+            "The User has already voted in the pool."
+        );
         auditsArray[auditId].yesBugs += 1;
         auditsArray[auditId].yesBugsPoolEth += msg.value;
         votes[auditId][msg.sender] = 1;
-        contribution memory con = contribution(msg.sender, msg.value);
+        contribution memory con = contribution(payable(msg.sender), msg.value);
         yesBugsVoters[auditId].push(con);
     }
 
     function betNoBugsPool(
         uint256 auditId
     ) public payable auditIdShouldExist(auditId) {
+        require(
+            msg.value >= 1000000000,
+            "Bet value must be greater than or equal to 1000000000 Wei"
+        );
+        require(
+            hasVoted(auditId, msg.sender) == false,
+            "The User has already voted in the pool."
+        );
         auditsArray[auditId].noBugs += 1;
         auditsArray[auditId].noBugsPoolEth += msg.value;
         votes[auditId][msg.sender] = -1;
-        contribution memory con = contribution(msg.sender, msg.value);
+        contribution memory con = contribution(payable(msg.sender), msg.value);
         noBugsVoters[auditId].push(con);
     }
 
@@ -188,5 +219,41 @@ contract Database {
         return votes[auditId][voter] != 0;
     }
 
-    function distribution() public {}
+    function getContractEth() public view returns (uint256) {
+        return address(this).balance;
+    }
+
+    event EtherTransferred(address indexed recipient, uint256 amount);
+
+    function distribution(uint256 auditId) public payable {
+        require(
+            auditsArray[auditId].isComplete,
+            "Ether cannot be distributed as audit is not yet completed."
+        );
+        uint256 totalEth = auditsArray[auditId].yesBugsPoolEth +
+            auditsArray[auditId].noBugsPoolEth;
+        if (auditsArray[auditId].bugExistsDecision) {
+            for (uint256 i = 0; i < yesBugsVoters[auditId].length; i++) {
+                uint256 amount = (((yesBugsVoters[auditId][i].etherContributed *
+                    100) / auditsArray[auditId].yesBugsPoolEth) * totalEth) /
+                    100;
+                yesBugsVoters[auditId][i].contributor.transfer(amount);
+                emit EtherTransferred(
+                    yesBugsVoters[auditId][i].contributor,
+                    amount
+                );
+            }
+        } else {
+            for (uint256 i = 0; i < noBugsVoters[auditId].length; i++) {
+                uint256 amount = (((noBugsVoters[auditId][i].etherContributed *
+                    100) / auditsArray[auditId].noBugsPoolEth) * totalEth) /
+                    100;
+                noBugsVoters[auditId][i].contributor.transfer(amount);
+                emit EtherTransferred(
+                    noBugsVoters[auditId][i].contributor,
+                    amount
+                );
+            }
+        }
+    }
 }
