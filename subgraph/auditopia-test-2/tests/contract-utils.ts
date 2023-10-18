@@ -1,6 +1,6 @@
 import { newMockEvent } from "matchstick-as"
 import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
-import { EtherTransferred } from "../generated/Database.sol/Database.sol"
+import { EtherTransferred } from "../generated/Contract/Contract"
 
 export function createEtherTransferredEvent(
   recipient: Address,
