@@ -1,0 +1,24 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Database.sol
+    network: sepolia
+    source:
+      address: "0x6c7a4d68ffe57c3364cf71e3b34020f003480208"
+      abi: Database.sol
+      startBlock: 4513586
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EtherTransferred
+      abis:
+        - name: Database.sol
+          file: ./abis/Database.sol.json
+      eventHandlers:
+        - event: EtherTransferred(indexed address,uint256)
+          handler: handleEtherTransferred
+      file: ./src/database-sol.ts

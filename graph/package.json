@@ -1,0 +1,9 @@
+{
+  "name": "graph",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.60.0"
+  }
+}
