@@ -1,8 +1,0 @@
-{
-  "sepolia": {
-    "Database": {
-      "address": "0xcf27c0524dA9E983b613E1Ee7C6B8A08DFca4485",
-      "startBlock": 0
-    }
-  }
-}
