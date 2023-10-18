@@ -1,4 +1,4 @@
-import { EtherTransferred as EtherTransferredEvent } from "../generated/Contract/Contract"
+import { EtherTransferred as EtherTransferredEvent } from "../generated/Database/Database"
 import { EtherTransferred } from "../generated/schema"
 
 export function handleEtherTransferred(event: EtherTransferredEvent): void {

@@ -3,12 +3,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Contract
+    name: Database
     network: sepolia
     source:
       address: "0x702c5368225170c310Ae9EE72E57Ff276e33039E"
-      abi: Contract
-      startBlock: 0
+      abi: Database
+      startBlock: 4513918
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -16,9 +16,9 @@ dataSources:
       entities:
         - EtherTransferred
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: Database
+          file: ./abis/Database.json
       eventHandlers:
         - event: EtherTransferred(indexed address,uint256)
           handler: handleEtherTransferred
-      file: ./src/contract.ts
+      file: ./src/database.ts

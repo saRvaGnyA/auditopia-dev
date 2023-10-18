@@ -8,9 +8,9 @@ import {
 } from "matchstick-as/assembly/index"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { EtherTransferred } from "../generated/schema"
-import { EtherTransferred as EtherTransferredEvent } from "../generated/Contract/Contract"
-import { handleEtherTransferred } from "../src/contract"
-import { createEtherTransferredEvent } from "./contract-utils"
+import { EtherTransferred as EtherTransferredEvent } from "../generated/Database/Database"
+import { handleEtherTransferred } from "../src/database"
+import { createEtherTransferredEvent } from "./database-utils"
 
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
