@@ -1,8 +1,0 @@
-type EtherTransferred @entity(immutable: true) {
-  id: Bytes!
-  recipient: Bytes! # address
-  amount: BigInt! # uint256
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
-}
