@@ -1,18 +1,5 @@
 [
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "auditId",
-        "type": "uint256"
-      }
-    ],
-    "name": "betNoBugsPool",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -91,6 +78,11 @@
             "type": "bool"
           },
           {
+            "internalType": "bool",
+            "name": "isDistributed",
+            "type": "bool"
+          },
+          {
             "internalType": "uint256",
             "name": "yesBugs",
             "type": "uint256"
@@ -124,19 +116,6 @@
     ],
     "name": "betNoBugsPoolEvent",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "auditId",
-        "type": "uint256"
-      }
-    ],
-    "name": "betYesBugsPool",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
   },
   {
     "anonymous": false,
@@ -192,6 +171,11 @@
             "type": "bool"
           },
           {
+            "internalType": "bool",
+            "name": "isDistributed",
+            "type": "bool"
+          },
+          {
             "internalType": "uint256",
             "name": "yesBugs",
             "type": "uint256"
@@ -225,42 +209,6 @@
     ],
     "name": "betYesBugsPoolEvent",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "auditId",
-        "type": "uint256"
-      }
-    ],
-    "name": "distribution",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "ownerId",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "contractCid",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      }
-    ],
-    "name": "insertIntoAudit",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
   },
   {
     "anonymous": false,
@@ -303,6 +251,12 @@
       },
       {
         "indexed": false,
+        "internalType": "bool",
+        "name": "isDistributed",
+        "type": "bool"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
         "name": "yesBugs",
         "type": "uint256"
@@ -334,29 +288,6 @@
     ],
     "name": "insertIntoAuditEvent",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "auditId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "reportedBy",
-        "type": "address"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      }
-    ],
-    "name": "insertIntoIssue",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
   },
   {
     "anonymous": false,
@@ -400,30 +331,6 @@
     ],
     "name": "insertIntoIssueEvent",
     "type": "event"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "bool",
-        "name": "bugExistsDecision",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint256",
-        "name": "auditId",
-        "type": "uint256"
-      }
-    ],
-    "name": "setAuditCompleted",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "anonymous": false,
@@ -470,6 +377,11 @@
           {
             "internalType": "bool",
             "name": "isComplete",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isDistributed",
             "type": "bool"
           },
           {
@@ -567,25 +479,47 @@
   {
     "inputs": [
       {
-        "internalType": "bool",
-        "name": "isIssueAccepted",
-        "type": "bool"
-      },
-      {
         "internalType": "uint256",
-        "name": "issueId",
+        "name": "auditId",
         "type": "uint256"
       }
     ],
-    "name": "setIssueAccepted",
-    "outputs": [
+    "name": "betNoBugsPool",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
       {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
       }
     ],
+    "name": "betYesBugsPool",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "chainLinkAutomation",
+    "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      }
+    ],
+    "name": "distribution",
+    "outputs": [],
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -628,6 +562,11 @@
           {
             "internalType": "bool",
             "name": "isComplete",
+            "type": "bool"
+          },
+          {
+            "internalType": "bool",
+            "name": "isDistributed",
             "type": "bool"
           },
           {
@@ -869,6 +808,100 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "ownerId",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "contractCid",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "insertIntoAudit",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "reportedBy",
+        "type": "address"
+      },
+      {
+        "internalType": "string",
+        "name": "description",
+        "type": "string"
+      }
+    ],
+    "name": "insertIntoIssue",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "bugExistsDecision",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "auditId",
+        "type": "uint256"
+      }
+    ],
+    "name": "setAuditCompleted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "isIssueAccepted",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "issueId",
+        "type": "uint256"
+      }
+    ],
+    "name": "setIssueAccepted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

@@ -1,0 +1,8 @@
+{
+  "scroll-sepolia": {
+    "Database": {
+      "address": "0x7014902fd04CE2efC0a084369e7B99041490790f",
+      "startBlock": 1789260
+    }
+  }
+}

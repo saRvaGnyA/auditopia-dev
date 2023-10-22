@@ -19,6 +19,7 @@ type betNoBugsPoolEvent @entity(immutable: true) {
   auditState_contractCid: String! # string
   auditState_description: String! # string
   auditState_isComplete: Boolean! # bool
+  auditState_isDistributed: Boolean! # bool
   auditState_yesBugs: BigInt! # uint256
   auditState_noBugs: BigInt! # uint256
   auditState_yesBugsPoolEth: BigInt! # uint256
@@ -40,6 +41,7 @@ type betYesBugsPoolEvent @entity(immutable: true) {
   auditState_contractCid: String! # string
   auditState_description: String! # string
   auditState_isComplete: Boolean! # bool
+  auditState_isDistributed: Boolean! # bool
   auditState_yesBugs: BigInt! # uint256
   auditState_noBugs: BigInt! # uint256
   auditState_yesBugsPoolEth: BigInt! # uint256
@@ -58,6 +60,7 @@ type insertIntoAuditEvent @entity(immutable: true) {
   contractCid: String! # string
   description: String! # string
   isComplete: Boolean! # bool
+  isDistributed: Boolean! # bool
   yesBugs: BigInt! # uint256
   noBugs: BigInt! # uint256
   yesBugsPoolEth: BigInt! # uint256
@@ -91,6 +94,7 @@ type setAuditCompletedEvent @entity(immutable: true) {
   auditState_contractCid: String! # string
   auditState_description: String! # string
   auditState_isComplete: Boolean! # bool
+  auditState_isDistributed: Boolean! # bool
   auditState_yesBugs: BigInt! # uint256
   auditState_noBugs: BigInt! # uint256
   auditState_yesBugsPoolEth: BigInt! # uint256

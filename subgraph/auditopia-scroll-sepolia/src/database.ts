@@ -45,6 +45,7 @@ export function handlebetNoBugsPoolEvent(event: betNoBugsPoolEventEvent): void {
   entity.auditState_contractCid = event.params.auditState.contractCid
   entity.auditState_description = event.params.auditState.description
   entity.auditState_isComplete = event.params.auditState.isComplete
+  entity.auditState_isDistributed = event.params.auditState.isDistributed
   entity.auditState_yesBugs = event.params.auditState.yesBugs
   entity.auditState_noBugs = event.params.auditState.noBugs
   entity.auditState_yesBugsPoolEth = event.params.auditState.yesBugsPoolEth
@@ -74,6 +75,7 @@ export function handlebetYesBugsPoolEvent(
   entity.auditState_contractCid = event.params.auditState.contractCid
   entity.auditState_description = event.params.auditState.description
   entity.auditState_isComplete = event.params.auditState.isComplete
+  entity.auditState_isDistributed = event.params.auditState.isDistributed
   entity.auditState_yesBugs = event.params.auditState.yesBugs
   entity.auditState_noBugs = event.params.auditState.noBugs
   entity.auditState_yesBugsPoolEth = event.params.auditState.yesBugsPoolEth
@@ -100,6 +102,7 @@ export function handleinsertIntoAuditEvent(
   entity.contractCid = event.params.contractCid
   entity.description = event.params.description
   entity.isComplete = event.params.isComplete
+  entity.isDistributed = event.params.isDistributed
   entity.yesBugs = event.params.yesBugs
   entity.noBugs = event.params.noBugs
   entity.yesBugsPoolEth = event.params.yesBugsPoolEth
@@ -147,6 +150,7 @@ export function handlesetAuditCompletedEvent(
   entity.auditState_contractCid = event.params.auditState.contractCid
   entity.auditState_description = event.params.auditState.description
   entity.auditState_isComplete = event.params.auditState.isComplete
+  entity.auditState_isDistributed = event.params.auditState.isDistributed
   entity.auditState_yesBugs = event.params.auditState.yesBugs
   entity.auditState_noBugs = event.params.auditState.noBugs
   entity.auditState_yesBugsPoolEth = event.params.auditState.yesBugsPoolEth

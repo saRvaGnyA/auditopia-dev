@@ -1,14 +1,14 @@
 specVersion: 0.0.5
 schema:
-  file: schema.graphql
+  file: ./schema.graphql
 dataSources:
   - kind: ethereum
     name: Database
-    network: sepolia
+    network: scroll-sepolia
     source:
-      address: "0xcf27c0524dA9E983b613E1Ee7C6B8A08DFca4485"
+      address: "0x7014902fd04CE2efC0a084369e7B99041490790f"
       abi: Database
-      startBlock: 0
+      startBlock: 1789260
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -23,20 +23,20 @@ dataSources:
         - setIsIssueAcceptedEvent
       abis:
         - name: Database
-          file: Database\abis\Database.json
+          file: ./abis/Database.json
       eventHandlers:
         - event: EtherTransferred(uint256,indexed address,uint256)
           handler: handleEtherTransferred
-        - event: betNoBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool))
+        - event: betNoBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool))
           handler: handlebetNoBugsPoolEvent
-        - event: betYesBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool))
+        - event: betYesBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool))
           handler: handlebetYesBugsPoolEvent
-        - event: insertIntoAuditEvent(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool)
+        - event: insertIntoAuditEvent(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool)
           handler: handleinsertIntoAuditEvent
         - event: insertIntoIssueEvent(uint256,uint256,address,bool,bool,string)
           handler: handleinsertIntoIssueEvent
-        - event: setAuditCompletedEvent(uint256,bool,(uint256,address,uint256,string,string,bool,uint256,uint256,uint256,uint256,bool))
+        - event: setAuditCompletedEvent(uint256,bool,(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool))
           handler: handlesetAuditCompletedEvent
         - event: setIsIssueAcceptedEvent(uint256,bool,(uint256,uint256,address,bool,bool,string))
           handler: handlesetIsIssueAcceptedEvent
-      file: Database\Database.wasm
+      file: ./src/database.ts

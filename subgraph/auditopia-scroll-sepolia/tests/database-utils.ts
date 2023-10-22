@@ -112,6 +112,7 @@ export function createinsertIntoAuditEventEvent(
   contractCid: string,
   description: string,
   isComplete: boolean,
+  isDistributed: boolean,
   yesBugs: BigInt,
   noBugs: BigInt,
   yesBugsPoolEth: BigInt,
@@ -155,6 +156,12 @@ export function createinsertIntoAuditEventEvent(
     new ethereum.EventParam(
       "isComplete",
       ethereum.Value.fromBoolean(isComplete)
+    )
+  )
+  insertIntoAuditEventEvent.parameters.push(
+    new ethereum.EventParam(
+      "isDistributed",
+      ethereum.Value.fromBoolean(isDistributed)
     )
   )
   insertIntoAuditEventEvent.parameters.push(
