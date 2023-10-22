@@ -71,6 +71,7 @@
 ### Offchain Computation, Cronjobs
 
 - Chainlink VRF
+- Chainlink Automation
 - Chainlink Services
 
 ### Data Storage
