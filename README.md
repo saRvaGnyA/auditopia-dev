@@ -51,7 +51,7 @@
 ### Assets
 
 - [GitHub Repo](https://github.com/saRvaGnyA/auditopia)
-- [Scroll Sepolia Deployment]()
+- [Scroll Sepolia Deployment](https://sepolia-blockscout.scroll.io/address/0x7014902fd04CE2efC0a084369e7B99041490790f/)
 - [TheGraph Subgraph Studio]()
 
 ## 🤖Tech-Stack
