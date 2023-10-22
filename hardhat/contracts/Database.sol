@@ -9,6 +9,7 @@ contract Database {
         string contractCid;
         string description;
         bool isComplete;
+        bool isDistributed;
         //Betting related features
         uint256 yesBugs;
         uint256 noBugs;
@@ -67,6 +68,7 @@ contract Database {
         string contractCid,
         string description,
         bool isComplete,
+        bool isDistributed,
         uint256 yesBugs,
         uint256 noBugs,
         uint256 yesBugsPoolEth,
@@ -86,6 +88,7 @@ contract Database {
             contractCid,
             description,
             false,
+            false,
             0,
             0,
             0,
@@ -100,6 +103,7 @@ contract Database {
             entry.createdAt,
             contractCid,
             description,
+            false,
             false,
             0,
             0,
@@ -342,6 +346,17 @@ contract Database {
                     noBugsVoters[auditId][i].contributor,
                     amount
                 );
+            }
+        }
+    }
+
+    function chainLinkAutomation() public {
+        for (uint256 i = 0; i < auditsArray.length; i++) {
+            if (auditsArray[i].isDistributed == false) {
+                if (auditsArray[i].createdAt + 300 < block.timestamp) {
+                    distribution(auditsArray[i].auditId);
+                    auditsArray[i].isDistributed = true;
+                }
             }
         }
     }
