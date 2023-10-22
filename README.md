@@ -56,7 +56,7 @@
 
 ## 🤖Tech-Stack
 
-### Frontend
+### Frontend - WIP!
 
 - NextJS
 
