@@ -1,0 +1,42 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Database
+    network: scroll-sepolia
+    source:
+      address: "0x7014902fd04CE2efC0a084369e7B99041490790f"
+      abi: Database
+      startBlock: 1789260
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - EtherTransferred
+        - betNoBugsPoolEvent
+        - betYesBugsPoolEvent
+        - insertIntoAuditEvent
+        - insertIntoIssueEvent
+        - setAuditCompletedEvent
+        - setIsIssueAcceptedEvent
+      abis:
+        - name: Database
+          file: Database\abis\Database.json
+      eventHandlers:
+        - event: EtherTransferred(uint256,indexed address,uint256)
+          handler: handleEtherTransferred
+        - event: betNoBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool))
+          handler: handlebetNoBugsPoolEvent
+        - event: betYesBugsPoolEvent(uint256,address,uint256,(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool))
+          handler: handlebetYesBugsPoolEvent
+        - event: insertIntoAuditEvent(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool)
+          handler: handleinsertIntoAuditEvent
+        - event: insertIntoIssueEvent(uint256,uint256,address,bool,bool,string)
+          handler: handleinsertIntoIssueEvent
+        - event: setAuditCompletedEvent(uint256,bool,(uint256,address,uint256,string,string,bool,bool,uint256,uint256,uint256,uint256,bool))
+          handler: handlesetAuditCompletedEvent
+        - event: setIsIssueAcceptedEvent(uint256,bool,(uint256,uint256,address,bool,bool,string))
+          handler: handlesetIsIssueAcceptedEvent
+      file: Database\Database.wasm
