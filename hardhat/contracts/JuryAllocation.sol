@@ -10,12 +10,11 @@ contract JuryAllocation is VRFConsumerBaseV2, ConfirmedOwner {
     event RequestFulfilled(uint256 requestId, uint256[] randomWords);
 
     struct RequestStatus {
-        bool fulfilled; 
-        bool exists; 
+        bool fulfilled;
+        bool exists;
         uint256[] randomWords;
     }
-    mapping(uint256 => RequestStatus)
-        public s_requests; 
+    mapping(uint256 => RequestStatus) public s_requests;
     VRFCoordinatorV2Interface COORDINATOR;
 
     uint64 s_subscriptionId;
@@ -32,7 +31,7 @@ contract JuryAllocation is VRFConsumerBaseV2, ConfirmedOwner {
 
     //randomly selecting 5 juries from list of juries
     uint32 numWords = 5;
-    mapping(uint256=>uint256[]) public requestIdToRandomJury;
+    mapping(uint256 => uint256[]) public requestIdToRandomJury;
 
     constructor(
         uint64 subscriptionId
@@ -81,26 +80,25 @@ contract JuryAllocation is VRFConsumerBaseV2, ConfirmedOwner {
 
     function getRequestStatus(
         uint256 _requestId
-    ) external returns (bool fulfilled, uint256[] memory randomWords,uint256[] memory randomJury) {
+    ) external returns (bool, uint256[] memory, uint256[] memory) {
         require(s_requests[_requestId].exists, "request not found");
+
         RequestStatus memory request = s_requests[_requestId];
-        uint256[] memory randomJury=new uint256[](5);
-        uint256[] memory temp=new uint256[](25);
-        for(uint256 i=0;i<25;i++){
-            temp[i]=i+1;
+
+        uint256[] memory randomJury = new uint256[](5);
+        uint256[] memory temp = new uint256[](25);
+
+        for (uint256 i = 0; i < 25; i++) {
+            temp[i] = i + 1;
         }
-        // converting random uint256 generated number to number 
-        // between 0-maxNumberOfAvailableJury
-        for(uint256 i=0;i<5;i++){
-            uint256 minValue = 0;
-            uint256 maxValue = 25;
-            uint256 randomNumber=((request.randomWords[i] % (maxValue - minValue + 1)) + minValue);
-            randomJury[i]=randomNumber;
-            temp[i]=temp[maxValue-1];
-            temp[maxValue-1]=0;
-            maxValue=maxValue-1;
+        uint256 startMod = 25;
+        for (uint256 i = 0; i < 5; i++) {
+            uint256 randomNumber = (request.randomWords[i] % startMod);
+            randomJury[i] = temp[randomNumber];
+            temp[randomNumber] = temp[startMod - 1];
+            startMod--;
         }
-        requestIdToRandomJury[_requestId]=randomJury;
-        return (request.fulfilled, request.randomWords,randomJury);
+        requestIdToRandomJury[_requestId] = randomJury;
+        return (request.fulfilled, request.randomWords, randomJury);
     }
 }
