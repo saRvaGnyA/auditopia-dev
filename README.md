@@ -52,7 +52,7 @@
 
 - [GitHub Repo](https://github.com/saRvaGnyA/auditopia)
 - [Scroll Sepolia Deployment](https://sepolia-blockscout.scroll.io/address/0x7014902fd04CE2efC0a084369e7B99041490790f/)
-- [TheGraph Subgraph Studio]()
+- [TheGraph Subgraph Studio](https://api.studio.thegraph.com/query/41844/auditopia-scroll-sepolia/v1.0.0)
 
 ## 🤖Tech-Stack
 
@@ -72,6 +72,10 @@
 
 - Chainlink VRF
 - Chainlink Services
+
+### Data Storage
+
+- TableLand
 
 ## 👩‍💻Team Members
 
